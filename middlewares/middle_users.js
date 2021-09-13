@@ -32,6 +32,7 @@ async function validateId (req, res, next) {
     }
 }
 
+// Comprobar si el usuario esta cambiando sus PROPIOS datos y no de otro usuario
 async function validateSelfPermission (req, res, next) {
     try {
         let token = req.headers.authorization

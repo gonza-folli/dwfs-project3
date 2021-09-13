@@ -24,5 +24,11 @@ const db_modifyUser = (user) =>
         type: sequelize.QueryTypes.UPDATE
     })
 
+const db_removeUser = (user) => 
+sequelize.query('DELETE FROM usuarios WHERE user = ? AND password = ?', {
+    replacements: user,
+    type: sequelize.QueryTypes.DELETE
+})
 
-module.exports = { db_insertUser, db_selectFromUser, db_loginUser, db_modifyUser}
+
+module.exports = { db_insertUser, db_selectFromUser, db_loginUser, db_modifyUser, db_removeUser}

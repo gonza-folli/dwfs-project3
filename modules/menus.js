@@ -12,6 +12,6 @@ const {removeMenus} = require('../controllers/menus/removeMenus')
 router.get('/', getMenus)
 router.post('/add', middleware.validateFields, validatePrivilege, addMenus)
 router.put('/modify', middleware.validateFields, validatePrivilege, modifyMenus)
-router.delete('/remove/:IdMenu', middleware.validateId, validatePrivilege, removeMenus)
+router.delete('/remove', middleware.validateId, validatePrivilege, removeMenus)
 
 module.exports = router

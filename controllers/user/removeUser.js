@@ -1,3 +1,4 @@
+const {db_loginUser} = require('../../models/db_user')
 const {db_removeUser} = require('../../models/db_user');
 const Response = require('../../utilities/response');
 
@@ -5,20 +6,23 @@ const removeUser = async function (req, res) {
     try {
         let message;
         let status = 200;
-        let {fullname, email, phone, address, password, user} = req.body
-        console.log('llegue')
-        let dbRes = await db_modifyUser([fullname, email, phone, address, password, user])
-        console.log(dbRes)
-        message = new Response(false,200,'Datos Modificados Correctamente', req.body)
-        res.status(status).send(message)
-
+        let {user, password} = req.body
+        let dbRes = await db_loginUser([user,password])
+        if (dbRes.length >0) {
+            let dbRes2 = await db_removeUser([user,password])
+            message = new Response(false,200,`Usuario ${user} Eliminado correctamente`)
+            res.status(status).send(message)
+        } else {
+            throw new Error
+        }
     } catch (e) {
         let message;
         let status = 400
-        message = new Response(true,400,'Error al modificar')
+        let {user, password} = req.body
+        message = new Response(true,400, `Error al eliminar al Usuario: ${user}`)
         res.status(status).send(message)
     }
 
 }
 
-module.exports = {modifyUser};
+module.exports = { removeUser };
