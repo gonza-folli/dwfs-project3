@@ -1,5 +1,5 @@
 const Response = require('../utilities/response')
-// const {db_selectFromUser} = require('../models/db_user')
+const {db_getMenus} = require('../models/db_menus')
 
 
 function validateFields (req, res, next) {
@@ -17,13 +17,20 @@ function validateFields (req, res, next) {
     }
 }
 
-function validateId (req, res, next) {
+async function validateId (req, res, next) {
     if (!req.body.id_menu)  {
-        console.log(req.body)
         let rta = new Response (true, 403, `No se ha Ingresado el ID a Eliminar`)
         res.status(403).send(rta)
     } else {
-        next()
+        let allMenus = await db_getMenus()
+        if (allMenus.map(x => x.id_menu).includes(req.body.id_menu))  {
+            console.log('si lo incluye')
+            next()
+        } else {
+            console.log('No existe el ID')
+            let rta = new Response (true, 406, `No existe el ID`)
+            res.status(406).send(rta)
+        }
     }
 }
 

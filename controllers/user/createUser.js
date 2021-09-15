@@ -14,8 +14,8 @@ const createUser = async function (req, res) {
 
     }catch(error) {
         let message;
-        let status = 400;
-        message = new Response(true,400,'Usuario NO Registrado', error.errors[0].message)
+        let status = 500;
+        message = new Response(true,500,'Usuario NO Registrado')
         res.status(status).send(message)
         console.log(error)
     }

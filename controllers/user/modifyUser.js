@@ -7,7 +7,6 @@ const modifyUser = async function (req, res) {
         let status = 200;
         let {fullname, email, phone, address, password, user} = req.body
         let dbRes = await db_modifyUser([fullname, email, phone, address, password, user])
-        console.log(dbRes)
         message = new Response(false,200,'Datos Modificados Correctamente', req.body)
         res.status(status).send(message)
 

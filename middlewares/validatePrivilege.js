@@ -17,8 +17,8 @@ function validatePrivilege (req, res, next) {
             throw new Error
         }
     } catch {
-        let message = new Response (true, 402, 'No posee los privilegios para realizar la acción solicitada')
-        res.status(402).send(message)
+        let message = new Response (true, 401, 'No posee los privilegios para realizar la acción solicitada')
+        res.status(401).send(message)
     }
 }
 

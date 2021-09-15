@@ -5,7 +5,7 @@ const jwt_decode = require('jwt-decode');
 // Comprobar que se encuentren TODOS los campos completados para registrarse
 function validateFields (req, res, next) {
     if (!req.body.user || !req.body.fullname || !req.body.email || !req.body.phone || !req.body.address || !req.body.password)  {
-        let rta = new Response (true, 403, 'No se han Ingresado todos los datos obligatorios', '')
+        let rta = new Response (true, 403, 'No se han Ingresado todos los datos obligatorios')
         res.status(403).send(rta)
     } else {
         next()
@@ -22,7 +22,6 @@ async function validateId (req, res, next) {
         if (dbRes.length > 0) {
             throw new Error
         } else {
-            console.log('error NO detectado')
             next()
         }
     }
@@ -47,20 +46,9 @@ async function validateSelfPermission (req, res, next) {
             throw new Error
         }
     } catch {
-        let message = new Response (true, 402, 'No posee los privilegios para realizar la acción solicitada')
-        res.status(402).send(message)
+        let message = new Response (true, 405, 'No posee los privilegios para realizar la acción solicitada')
+        res.status(405).send(message)
     }
 }
-
-// function validateNewFields (req, res, next) {
-//     if ((req.body.user) && (req.body.fullname || req.body.email || req.body.phone || req.body.address || req.body.password)) {
-//         console.log('funcionó')
-//         next()
-//     } else {
-//         let rta = new Response (true, 403, 'No se han Ingresado todos los datos obligatorios para modificar', '')
-//         res.status(403).send(rta)
-//     }
-// }
-
 
 module.exports= { validateFields, validateId, validateSelfPermission } 

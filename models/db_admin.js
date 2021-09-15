@@ -5,4 +5,10 @@ const db_allOrders = () =>
         type: sequelize.QueryTypes.SELECT,
     })
 
-    module.exports = {db_allOrders}
+const db_updateStatus = (data) =>
+    sequelize.query(`UPDATE pedidos SET id_estado = ? WHERE id_pedido = ?`, {
+        type: sequelize.QueryTypes.UPDATE,
+        replacements: data
+    })
+
+    module.exports = {db_allOrders, db_updateStatus}
