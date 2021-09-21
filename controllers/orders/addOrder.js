@@ -8,7 +8,6 @@ const addOrder = async function (req, res) {
         let status = 200
         let {user, address_to_deliver, id_payment, menus} = req.body
         let insertOrder = await db_addOrder([user, address_to_deliver, id_payment]);
-        console.log('aaaaaaa')
         console.log(insertOrder[0]) //corresponde al ID de la orden ingresada
         let id_menu = []
         let quantity  = []
@@ -18,12 +17,14 @@ const addOrder = async function (req, res) {
             let insertPedidoMenu = await db_addPedidoMenu([insertOrder[0],id_menu[i],quantity[i]])
             setTimeout(() => {}, 500);
         }
-        response = new Response(false,200,'Orden ingresada correctamente', req.body)
+        let data = req.body
+        data.id_pedido = insertOrder[0]
+        response = new Response(false,200,'Orden ingresada correctamente', data)
         res.status(status).send(response)
     } catch (e) {
         let message;
-        let status = 400;
-        message = new Response(true,400,'Error al crear la orden')
+        let status = 500;
+        message = new Response(true,500,'Error al crear la orden')
         res.status(status).send(message)
     }
 

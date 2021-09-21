@@ -11,8 +11,8 @@ function validateFields (req, res, next) {
         if (req.body.availability == "Yes" || req.body.availability == "No") {
             next()
         } else {
-            let rta = new Response (true, 403, 'Availability debe ser Yes o No')
-            res.status(403).send(rta)
+            let rta = new Response (true, 404, 'Availability debe ser Yes o No')
+            res.status(404).send(rta)
         }
     }
 }
@@ -24,10 +24,8 @@ async function validateId (req, res, next) {
     } else {
         let allMenus = await db_getMenus()
         if (allMenus.map(x => x.id_menu).includes(req.body.id_menu))  {
-            console.log('si lo incluye')
             next()
         } else {
-            console.log('No existe el ID')
             let rta = new Response (true, 406, `No existe el ID`)
             res.status(406).send(rta)
         }

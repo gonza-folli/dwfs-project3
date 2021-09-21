@@ -12,7 +12,7 @@ function validateFields (req, res, next) {
     }
 }
 
-// Comprobar si el ID a registrar ya existe
+// Comprobar si el ID ya existe
 async function validateId (req, res, next) {
     try {
         let {user} = req.body
@@ -39,10 +39,8 @@ async function validateSelfPermission (req, res, next) {
         let decoded = jwt_decode(token);
         let user = req.body.user
         if (decoded.usuario == user) {
-            console.log('funcionó')
             next()
         } else {
-            console.log('fallo')
             throw new Error
         }
     } catch {

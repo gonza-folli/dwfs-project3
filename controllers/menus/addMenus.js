@@ -12,12 +12,11 @@ const addMenus = async function (req,res) {
         message = new Response(false,status,'Menu Registrado Correctamente', req.body)
         res.status(status).send(message)
     }
-    catch (error){
+    catch (e){
         let message;
         let status = 400;
-        message = new Response(true,400,'Menu NO Registrado', error.errors[0].message)
+        message = new Response(true,400,'Menu NO Registrado')
         res.status(status).send(message)
-        console.log(error)
     }
 }
 

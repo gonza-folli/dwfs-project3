@@ -10,15 +10,13 @@ function validatePrivilege (req, res, next) {
         console.log(decoded)
         console.log(decoded.admin)
         if (decoded.admin == 'admin') {
-            console.log('funcionó')
             next()
         } else {
-            console.log('fallo')
             throw new Error
         }
     } catch {
-        let message = new Response (true, 401, 'No posee los privilegios para realizar la acción solicitada')
-        res.status(401).send(message)
+        let message = new Response (true, 405, 'No posee los privilegios para realizar la acción solicitada')
+        res.status(405).send(message)
     }
 }
 

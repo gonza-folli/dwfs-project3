@@ -16,8 +16,8 @@ const allOrders = async function (req,res) {
         }
     } catch {
         let message;
-        let status = 400;
-        message = new Response(true,400,'Error al consultar el listado de todas las órdenes')
+        let status = 500;
+        message = new Response(true,500,'Error al consultar el listado de todas las órdenes')
         res.status(status).send(message)
     }
 }

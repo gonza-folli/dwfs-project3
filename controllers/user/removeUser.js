@@ -17,9 +17,9 @@ const removeUser = async function (req, res) {
         }
     } catch (e) {
         let message;
-        let status = 400
+        let status = 500
         let {user, password} = req.body
-        message = new Response(true,400, `Error al eliminar al Usuario: ${user}`)
+        message = new Response(true,500, `Error al eliminar al Usuario: ${user}`)
         res.status(status).send(message)
     }
 

@@ -21,7 +21,7 @@ const loginUser = async function (req, res) {
     } catch (e) {
         let message;
         let status = 401
-        message = new Response(true,400,'Datos ingresados inválidos')
+        message = new Response(true,401,'Datos ingresados inválidos')
         res.status(status).send(message)
     }
 }

@@ -13,9 +13,9 @@ let detailOrder = async function (req, res) {
 
     } catch {
         let message;
-        let status = 400;
+        let status = 500;
         let {id_pedido} = req.body
-        message = new Response(true,400,`Error al consultar la orden Número ${id_pedido}`)
+        message = new Response(true,500,`Error al consultar la orden Número ${id_pedido}`)
         res.status(status).send(message)
     }
 }

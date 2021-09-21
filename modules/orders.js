@@ -6,7 +6,7 @@ const { detailOrder } = require('../controllers/orders/detailOrder');
 const middleware = require('../middlewares/middle_orders')
 
 
-router.post('/addOrder', addOrder)
+router.post('/addOrder', middleware.validateFields, addOrder)
 router.get('/detailOrder', middleware.validatePermission, detailOrder)
 
 

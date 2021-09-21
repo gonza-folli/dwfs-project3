@@ -12,8 +12,8 @@ const getMenus = async function (req,res) {
     }
     catch (e){
         let message;
-        let status = 400;
-        message = new Response(true,status,'Error al obtener la lista de Menus', e)
+        let status = 500;
+        message = new Response(true,status,'Error al obtener la lista de Menus')
         res.status(status).send(message)
     }
 }

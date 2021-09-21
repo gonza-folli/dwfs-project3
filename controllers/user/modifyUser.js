@@ -12,8 +12,8 @@ const modifyUser = async function (req, res) {
 
     } catch (e) {
         let message;
-        let status = 400
-        message = new Response(true,400,'Error al modificar')
+        let status = 500
+        message = new Response(true,500,'Error al modificar datos del usuario')
         res.status(status).send(message)
     }
 

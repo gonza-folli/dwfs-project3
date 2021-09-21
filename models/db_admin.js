@@ -11,4 +11,10 @@ const db_updateStatus = (data) =>
         replacements: data
     })
 
-    module.exports = {db_allOrders, db_updateStatus}
+const db_updateRol = (data) =>
+    sequelize.query(`UPDATE usuarios SET rol = ? WHERE user = ?`, {
+        type: sequelize.QueryTypes.UPDATE,
+        replacements: data
+    })
+
+    module.exports = {db_allOrders, db_updateStatus, db_updateRol}

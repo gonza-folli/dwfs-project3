@@ -10,8 +10,8 @@ const {modifyMenus} = require('../controllers/menus/modifyMenus')
 const {removeMenus} = require('../controllers/menus/removeMenus')
 
 router.get('/', getMenus)
-router.post('/add', middleware.validateFields, validatePrivilege, addMenus)
-router.put('/modify', middleware.validateFields, validatePrivilege, modifyMenus)
-router.delete('/remove', middleware.validateId, validatePrivilege, removeMenus)
+router.post('/add', validatePrivilege, middleware.validateFields, addMenus)
+router.put('/modify', validatePrivilege, middleware.validateFields, modifyMenus)
+router.delete('/remove', validatePrivilege, middleware.validateId, removeMenus)
 
 module.exports = router

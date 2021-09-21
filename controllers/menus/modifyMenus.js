@@ -12,9 +12,9 @@ const modifyMenus = async function (req,res) {
     }
     catch (e) {
         let message;
-        let status = 400;
+        let status = 500;
         let {id_menu} = req.body
-        message = new Response(true,status,`Error al modificar el menú de id=${id_menu}`, e)
+        message = new Response(true,status,`Error al modificar el menú de ID = ${id_menu}`)
         res.status(status).send(message)
     }
 }
