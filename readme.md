@@ -27,7 +27,8 @@ https://www.apachefriends.org/download.html
 
     “delilah.sql” 
 
-y luego el archivo 
+y luego el archivo
+
     “InitialInsertDataSQL.sql” 
 
 Éstos archivos crearan las tablas para la base de dato necesarias para el proyecto y el segundo archivo hará un volcado inicial de información en dichas tablas
@@ -55,8 +56,9 @@ y luego el archivo
 
 
 # Levantar Servidor
-    Para iniciar la API se debe acceder a la raíz del proyecto en la Consola del Visual Code y ejecutar el comando: 
-    node  .\app.js
+Para iniciar la API se debe acceder a la raíz del proyecto en la Consola del Visual Code y ejecutar el comando:
+
+    node .\app.js
 
 
 # Testear la API
@@ -64,8 +66,9 @@ Para testear los distintos Endpoints se puede utilizar Postman cuyo link de desc
 
     https://www.postman.com/downloads/
 
-En la raíz del proyecto “utilities/Delilah.postman_collection.json” se puede utilizar dicho archivo para ser importado en Postman y probar todos los endpoins listados
+En la raíz del proyecto “utilities/Delilah.postman_collection.json” se puede utilizar dicho archivo para ser importado en Postman y probar todos los Endpoins listados
 
 
 # Documentación
-Toda la documentación relativa a los Endpoints de la Api se encuentra en la raíz del proyecto, carpeta “utilities/ gonza-folli-DelilahResto-1.0.0-resolved.yaml”
+Toda la documentación relativa a los Endpoints de la Api se encuentra en la raíz del proyecto, carpeta “utilities/ gonza-folli-DelilahResto-1.0.0-resolved.yaml”.
+Dicha documentación fue elaborada con Swagger
