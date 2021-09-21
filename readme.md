@@ -1,4 +1,4 @@
-#Guía de Instalación del SERVIDOR
+# Guía de Instalación del SERVIDOR
 
 1-	Para la ejecución del proyecto se utilizó el editor de código fuente VisualCode aunque puede utilizarse cualquier otro que desee
 
@@ -17,7 +17,7 @@
 Esto generara que el sistema detecte todas las instancias listadas en el archivo package.json (necesarias para la ejecución del proyecto) y las instale localmente utilizando el gestor de descarga provisto por NodeJs
 
 
-#Guía de Instalación de la BASE de DATOS
+# Guía de Instalación de la BASE de DATOS
 
 1-	Descargar e Instalar un gestor de base de datos MYSQL, recomiendo utilizar XAMPP el cual se puede obtener en el siguiente link:
 
@@ -33,7 +33,7 @@ y luego el archivo
 Éstos archivos crearan las tablas para la base de dato necesarias para el proyecto y el segundo archivo hará un volcado inicial de información en dichas tablas
 
 
-#Configuraciones
+# Configuraciones
 1-	En la Raíz del proyecto “utilities/dbConnection.js” se encuentran los datos para conectar a la base de datos Mysql, dichos datos deben COINCIDIR con las configuraciones en XAMPP 
 
         database = {
@@ -54,12 +54,12 @@ y luego el archivo
     jwtSecret = 'D3l1l4h';
 
 
-#Levantar Servidor
+# Levantar Servidor
     Para iniciar la API se debe acceder a la raíz del proyecto en la Consola del Visual Code y ejecutar el comando: 
     node  .\app.js
 
 
-#Testear la API
+# Testear la API
 Para testear los distintos Endpoints se puede utilizar Postman cuyo link de descarga es: 
 
     https://www.postman.com/downloads/
@@ -67,5 +67,5 @@ Para testear los distintos Endpoints se puede utilizar Postman cuyo link de desc
 En la raíz del proyecto “utilities/Delilah.postman_collection.json” se puede utilizar dicho archivo para ser importado en Postman y probar todos los endpoins listados
 
 
-#Documentación
+# Documentación
 Toda la documentación relativa a los Endpoints de la Api se encuentra en la raíz del proyecto, carpeta “utilities/ gonza-folli-DelilahResto-1.0.0-resolved.yaml”
