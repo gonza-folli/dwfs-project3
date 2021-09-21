@@ -1,0 +1,843 @@
+---
+swagger: "2.0"
+info:
+  description: API de pedidos para Delilah Restó
+  version: 1.0.0
+  title: Delilah Restó
+  contact:
+    email: gonza.folli@gmail.com
+host: virtserver.swaggerhub.com
+basePath: /gonza-folli/DelilahResto/1.0.0
+tags:
+- name: Admin
+  description: Operaciones exclusivas del administrador
+- name: Users
+  description: Alta, modificación y baja de usuarios
+- name: Menus
+  description: Listado de menus disponibles, actualizacion de los mismos
+- name: Orders
+  description: Alta de nuevos pedidos
+schemes:
+- https
+paths:
+  /admin/allOrders:
+    get:
+      tags:
+      - Admin
+      summary: Obtiene un detalle de todas las órdenes registradas
+      parameters: []
+      responses:
+        "200":
+          description: El listado de órdenes es el siguiente
+          schema:
+            $ref: '#/definitions/inline_response_200'
+        "204":
+          description: No se encuentran órdenes para mostrar
+          schema:
+            $ref: '#/definitions/inline_response_204'
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: Error al consultar el listado de las órdenes
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /admin/detailOrder:
+    get:
+      tags:
+      - Admin
+      summary: Obtiene un detalle de un pedido específico
+      parameters:
+      - in: body
+        name: body
+        description: ID del pedido a solicitar
+        required: true
+        schema:
+          $ref: '#/definitions/adminOrderDetailInput'
+      responses:
+        "200":
+          description: El detalle de la orden asociada al ID es el siguiente
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: 'Error al consultar la orden Número '
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /admin/updateStatus:
+    put:
+      tags:
+      - Admin
+      summary: Actualiza el estado de un pedido
+      parameters:
+      - in: body
+        name: body
+        description: Datos del pedido a actualizar
+        required: true
+        schema:
+          $ref: '#/definitions/updateStatus'
+      responses:
+        "200":
+          description: El estado del pedido Número se actualizo correctamente
+          schema:
+            $ref: '#/definitions/inline_response_204'
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: 'Error al actualizar el estado del pedido Número '
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /admin/updateRol:
+    put:
+      tags:
+      - Admin
+      summary: Actualiza el rol de un usuario a admin
+      parameters:
+      - in: body
+        name: body
+        description: Datos del usuario y rol a actualizar
+        required: true
+        schema:
+          $ref: '#/definitions/updateRol'
+      responses:
+        "200":
+          description: El rol del usuario se actualizó
+          schema:
+            $ref: '#/definitions/inline_response_204'
+        "403":
+          description: No se han ingresado todos los datos obligatorios
+        "404":
+          description: Rol debe ser user o admin
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "407":
+          description: No existe el usuario a modificar
+        "500":
+          description: Error al actualizar el rol del usuario
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /user/signUp:
+    post:
+      tags:
+      - Users
+      summary: Registra un nuevo usuario
+      parameters:
+      - in: body
+        name: body
+        description: Datos del usuario a registrar
+        required: true
+        schema:
+          $ref: '#/definitions/signUp'
+      responses:
+        "200":
+          description: Usuario Registrado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_200_2'
+        "402":
+          description: Usuario Ya Registrado
+        "403":
+          description: No se han ingresado todos los datos obligatorios
+        "500":
+          description: Usuario NO Registrado
+  /user/login:
+    post:
+      tags:
+      - Users
+      summary: Logea al usuario
+      parameters:
+      - in: body
+        name: body
+        description: Datos del usuario
+        required: true
+        schema:
+          $ref: '#/definitions/login'
+      responses:
+        "200":
+          description: Usuario Logeado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_200_3'
+        "401":
+          description: Datos Ingresados Inválidos
+  /user:
+    put:
+      tags:
+      - Users
+      summary: Modifica datos de un usuario
+      parameters:
+      - in: body
+        name: body
+        description: Datos del usuario a modificar
+        required: true
+        schema:
+          $ref: '#/definitions/signUp'
+      responses:
+        "200":
+          description: Usuario Modificado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_200_4'
+        "400":
+          description: Error al modificar
+        "403":
+          description: No se han ingresado todos los datos obligatorios
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: Error al modificar datos del usuario
+      security:
+      - ApiKeyAuth: []
+    delete:
+      tags:
+      - Users
+      summary: Borra la cuenta del usuario
+      parameters:
+      - in: body
+        name: body
+        description: Datos del usuario
+        required: true
+        schema:
+          $ref: '#/definitions/login'
+      responses:
+        "200":
+          description: Usuario Eliminado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_204'
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: Error al eliminar al Usuario
+      security:
+      - ApiKeyAuth: []
+  /menus:
+    get:
+      tags:
+      - Menus
+      summary: Obtiene un detalle de todos los menus disponibles
+      parameters: []
+      responses:
+        "200":
+          description: Los menus disponibles son los siguientes
+          schema:
+            $ref: '#/definitions/inline_response_200_5'
+        "500":
+          description: Error al obtener la lista de Menus
+      security:
+      - ApiKeyAuth: []
+  /menus/add:
+    post:
+      tags:
+      - Menus
+      summary: Registra un nuevo menu
+      parameters:
+      - in: body
+        name: body
+        description: Datos del menu a registrar
+        required: true
+        schema:
+          $ref: '#/definitions/addMenu'
+      responses:
+        "200":
+          description: Menu Registrado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_200_6'
+        "403":
+          description: No se han ingresado todos los datos obligatorios
+        "404":
+          description: Availability debe ser Yes o No
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: Menu NO Registrado
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /menus/modify:
+    put:
+      tags:
+      - Menus
+      summary: Modifica un menu existente
+      parameters:
+      - in: body
+        name: body
+        description: Datos del menu a modificar
+        required: true
+        schema:
+          $ref: '#/definitions/modifyMenu'
+      responses:
+        "200":
+          description: Menu Modificado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_204'
+        "403":
+          description: No se han ingresado todos los datos obligatorios
+        "404":
+          description: Availability debe ser Yes o No
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: Error al modificar el menú de ID
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /menus/remove:
+    delete:
+      tags:
+      - Menus
+      summary: Elimina un menu
+      parameters:
+      - in: body
+        name: body
+        description: id del menu a eliminar
+        required: true
+        schema:
+          $ref: '#/definitions/removeMenu'
+      responses:
+        "200":
+          description: Menu de ID Eliminado Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_204'
+        "403":
+          description: No se ha Ingresado el ID a Eliminar
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "406":
+          description: No Existe el ID
+        "500":
+          description: Error al eliminar el menú de ID
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
+  /orders/addOrder:
+    post:
+      tags:
+      - Orders
+      summary: Registra un nuevo menu
+      parameters:
+      - in: body
+        name: body
+        description: Datos del menu a registrar
+        required: true
+        schema:
+          $ref: '#/definitions/addOrder'
+      responses:
+        "200":
+          description: Orden Ingresada Correctamente
+          schema:
+            $ref: '#/definitions/inline_response_200_7'
+        "403":
+          description: No se han ingresado todos los datos obligatorios
+        "500":
+          description: Error al crear la orden
+      security:
+      - ApiKeyAuth: []
+  /orders/detailOrder:
+    get:
+      tags:
+      - Orders
+      summary: Obtiene un detalle de un pedido específico
+      parameters:
+      - in: body
+        name: body
+        description: ID del pedido a solicitar
+        required: true
+        schema:
+          $ref: '#/definitions/userOrderDetailInput'
+      responses:
+        "200":
+          description: El detalle de la orden asociada al ID es el siguiente
+          schema:
+            $ref: '#/definitions/inline_response_200_1'
+        "405":
+          description: No posee los privilegios para realizar la acción solicitada
+        "500":
+          description: 'Error al consultar la orden Número '
+      security:
+      - ApiKeyAuth: []
+securityDefinitions:
+  ApiKeyAuth:
+    description: Token de seguridad
+    type: apiKey
+    name: JWT-apiKey
+    in: header
+  AdminAuth:
+    description: Rol Admin requerido
+    type: basic
+definitions:
+  allOrders:
+    type: object
+    required:
+    - DetallePedido
+    - Estado
+    - TotalPrice
+    - address_to_deliver
+    - fullname
+    - id_payment
+    - id_pedido
+    - user
+    properties:
+      id_pedido:
+        type: integer
+        description: id del pedido
+      Estado:
+        type: string
+        description: estado del pedido
+      user:
+        type: string
+        description: usuario que realizo el pedido
+      fullname:
+        type: string
+        description: nombre completo del usuario
+      DetallePedido:
+        type: string
+        description: Detalle del pedido realizado
+      TotalPrice:
+        type: string
+        description: Monto total del pedido
+      id_payment:
+        type: integer
+        description: id del metodo de pago
+      address_to_deliver:
+        type: string
+        description: dirección del envío
+  adminOrderDetailInput:
+    type: object
+    required:
+    - id_pedido
+    properties:
+      id_pedido:
+        type: integer
+        description: id del pedido
+  adminDetailOrder:
+    type: object
+    required:
+    - DetallePedido
+    - Estado
+    - MedioPago
+    - TotalPrice
+    - address_to_deliver
+    - email
+    - id_pedido
+    - phone
+    - user
+    properties:
+      id_pedido:
+        type: integer
+        description: id del pedido
+      user:
+        type: string
+        description: usuario que realizo el pedido
+      DetallePedido:
+        type: string
+        description: Detalle del pedido realizado
+      TotalPrice:
+        type: string
+        description: Monto total del pedido
+      Estado:
+        type: string
+        description: estado del pedido
+      address_to_deliver:
+        type: string
+        description: dirección del envío
+      MedioPago:
+        type: string
+        description: metodo de pago
+      email:
+        type: string
+        description: email del usuario
+      phone:
+        type: integer
+        description: teléfono del usuario
+  updateStatus:
+    type: object
+    required:
+    - id_estado
+    - id_pedido
+    properties:
+      id_pedido:
+        type: integer
+        description: id del pedido
+      id_estado:
+        type: integer
+        description: id del estado del pedido
+  updateRol:
+    type: object
+    required:
+    - rol
+    - user
+    properties:
+      user:
+        type: string
+        description: 'usuario a modificar '
+      rol:
+        type: string
+        description: rol nuevo
+  signUp:
+    type: object
+    required:
+    - address
+    - email
+    - fullname
+    - password
+    - phone
+    - user
+    properties:
+      user:
+        type: string
+        description: usuario
+      fullname:
+        type: string
+        description: nombre completo del usuario
+      email:
+        type: string
+        description: email del usuario
+      phone:
+        type: integer
+        description: telefono del usuario
+      address:
+        type: string
+        description: dirección del usuario
+      password:
+        type: string
+        description: contraseña del usuario
+  login:
+    type: object
+    required:
+    - password
+    - user
+    properties:
+      user:
+        type: string
+        description: usuario
+      password:
+        type: string
+        description: contraseña del usuario
+  loginkey:
+    type: object
+    required:
+    - address
+    - apiKey
+    - email
+    - fullname
+    - password
+    - phone
+    - rol
+    - user
+    properties:
+      user:
+        type: string
+        description: usuario
+      fullname:
+        type: string
+        description: nombre completo del usuario
+      email:
+        type: string
+        description: email del usuario
+      phone:
+        type: integer
+        description: telefono del usuario
+      address:
+        type: string
+        description: dirección del usuario
+      password:
+        type: string
+        description: contraseña del usuario
+      rol:
+        type: string
+        description: rol del usuario
+      apiKey:
+        type: string
+        description: token
+  menus:
+    type: object
+    required:
+    - availability
+    - description
+    - id_menu
+    - menu_name
+    - price
+    properties:
+      id_menu:
+        type: integer
+        description: id del menu
+      menu_name:
+        type: string
+        description: nombre del menu
+      description:
+        type: string
+        description: breve descripcion del menu
+      price:
+        type: integer
+        description: precio del menu
+      availability:
+        type: string
+        description: Yes para disponible, No para no disponible
+  addMenu:
+    type: object
+    required:
+    - availability
+    - description
+    - menu_name
+    - price
+    properties:
+      menu_name:
+        type: string
+        description: nombre del menu
+      description:
+        type: string
+        description: breve descripcion del menu
+      price:
+        type: integer
+        description: precio del menu
+      availability:
+        type: string
+        description: Yes para disponible, No para no disponible
+  modifyMenu:
+    type: object
+    required:
+    - availability
+    - description
+    - id_menu
+    - menu_name
+    - price
+    properties:
+      id_menu:
+        type: integer
+        description: id del menu
+      menu_name:
+        type: string
+        description: nombre del menu
+      description:
+        type: string
+        description: breve descripcion del menu
+      price:
+        type: integer
+        description: precio del menu
+      availability:
+        type: string
+        description: Yes para disponible, No para no disponible
+  removeMenu:
+    type: object
+    required:
+    - id_menu
+    properties:
+      id_menu:
+        type: integer
+        description: id del menu
+  addOrder:
+    type: object
+    required:
+    - address_to_deliver
+    - id_payment
+    - menus
+    - user
+    properties:
+      user:
+        type: string
+        description: usuario
+      address_to_deliver:
+        type: string
+        description: direccion del pedido
+      menus:
+        type: array
+        description: nombre y cantidad de menu
+        items:
+          $ref: '#/definitions/addOrder_menus'
+      id_payment:
+        type: integer
+        description: id del metodo de pago
+  orderRegistered:
+    type: object
+    required:
+    - address_to_deliver
+    - id_payment
+    - id_pedido
+    - menus
+    - user
+    properties:
+      user:
+        type: string
+        description: usuario
+      address_to_deliver:
+        type: string
+        description: direccion del pedido
+      menus:
+        type: array
+        description: nombre y cantidad de menu
+        items:
+          $ref: '#/definitions/addOrder_menus'
+      id_payment:
+        type: integer
+        description: id del metodo de pago
+      id_pedido:
+        type: integer
+        description: id del pedido registrado
+  userOrderDetailInput:
+    type: object
+    required:
+    - id_pedido
+    - user
+    properties:
+      user:
+        type: string
+        description: usuario que realizo el pedido
+      id_pedido:
+        type: integer
+        description: id del pedido
+  inline_response_200:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: Lista de pedidos
+        items:
+          $ref: '#/definitions/allOrders'
+  inline_response_204:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+  inline_response_200_1:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: Detalle del pedido
+        items:
+          $ref: '#/definitions/adminDetailOrder'
+  inline_response_200_2:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: datos del usuario
+        items:
+          $ref: '#/definitions/signUp'
+  inline_response_200_3:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: datos del usuario
+        items:
+          $ref: '#/definitions/loginkey'
+  inline_response_200_4:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: nuevos datos del usuario
+        items:
+          $ref: '#/definitions/signUp'
+  inline_response_200_5:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: Lista de menus
+        items:
+          $ref: '#/definitions/menus'
+  inline_response_200_6:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: datos del menu
+        items:
+          $ref: '#/definitions/addMenu'
+  inline_response_200_7:
+    type: object
+    properties:
+      error:
+        type: boolean
+        description: Si se resolvió con error o sin error
+      status:
+        type: integer
+        description: Código de resolucion de peticion
+      message:
+        type: string
+        description: Respuesta del servidor
+      response:
+        type: array
+        description: datos de la orden
+        items:
+          $ref: '#/definitions/orderRegistered'
+  addOrder_menus:
+    type: object
+    properties:
+      id_menu:
+        type: integer
+      quantity:
+        type: integer
