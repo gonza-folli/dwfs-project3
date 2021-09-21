@@ -1,5 +1,6 @@
 Guía de Instalación del SERVIDOR
-    1-	Para la ejecución del proyecto se utilizó el editor de código fuente VisualCode aunque puede utilizarse cualquier otro que desee
+
+1-	Para la ejecución del proyecto se utilizó el editor de código fuente VisualCode aunque puede utilizarse cualquier otro que desee
 
     2-	Descargar e instalar el entorno de ejecución Node JS:
 https://nodejs.org/es/
