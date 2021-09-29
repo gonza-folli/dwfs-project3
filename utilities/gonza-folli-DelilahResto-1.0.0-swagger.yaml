@@ -181,6 +181,41 @@ paths:
       security:
       - ApiKeyAuth: []
       - AdminAuth: []
+  
+  /admin/removeOrder:
+    delete:
+      tags:
+      - Admin
+      summary: "Elimina un pedido"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Datos del pedido a eliminar"
+        schema:
+          $ref: '#/definitions/removeOrder'
+      responses:
+        200:
+          description: "Órden ID eliminada correctamente"
+          schema:
+            type: "object"
+            properties:
+              error:
+                type: "boolean"
+                description: "Si se resolvió con error o sin error"
+              status:
+                type: "integer"
+                description: "Código de resolucion de peticion"
+              message:
+                type: "string"
+                description: "Respuesta del servidor"
+        407:
+          description: "No existe la órden a eliminar"
+        500:
+          description: "Error al eliminar la órden de ID"
+      security:
+      - ApiKeyAuth: []
+      - AdminAuth: []
 
   /user/signUp:
     post:
@@ -688,6 +723,15 @@ definitions:
       rol:
         type: "string"
         description: "rol nuevo"
+  
+  removeOrder:
+    type: "object"
+    required:
+    - "id_pedido"
+    properties:
+      id_pedido:
+        type: "integer"
+        description: "id pedido a eliminar"
   
   signUp:
     type: "object"

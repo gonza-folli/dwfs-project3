@@ -1,5 +1,6 @@
 const Response = require('../utilities/response')
 const {db_selectFromUser} = require('../models/db_user');
+const {db_selectUserFromOrder} = require('../models/db_orders');
 
 
 function validateFields (req, res, next) {
@@ -33,6 +34,22 @@ async function validateId (req, res, next) {
     }
 }
 
+// Comprobar si el ID PEDIDO ya existe
+async function validateOrderId (req, res, next) {
+    try {
+        let {id_pedido} = req.body
+        let dbRes = await db_selectUserFromOrder([id_pedido])
+        if (dbRes.length > 0) {
+            next()
+        } else {
+            throw new Error
+        }
+    }
+    catch(e){
+        let message = new Response (true, 407, 'No existe la órden a eliminar')
+        res.status(407).send(message)
+    }
+}
 
 
-module.exports= { validateFields, validateId } 
+module.exports= { validateFields, validateId, validateOrderId} 

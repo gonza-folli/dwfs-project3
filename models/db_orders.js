@@ -18,11 +18,16 @@ const db_selectUserFromOrder = (id) =>
         type: sequelize.QueryTypes.SELECT,
     })
 
-// const db_selectLastOrder = () =>
-//     sequelize.query('SELECT LAST_INSERT_ID()', {
-//     // sequelize.query('INSERT INTO pedidos SET `user` = ?, `address_to_deliver` = ?, `id_estado` = ?, `id_payment` = ?, `time_event` = ?', Order, {raw: false}, [data.user, data.address_to_deliver, 1, data.id_payment, NOW()], {
-//         replacements: data,
-//         type: sequelize.QueryTypes.SELECT,
-//     })
+const db_removeOrderChild = (id) =>
+    sequelize.query('DELETE from pedidos_menus WHERE id_pedido = ?', {
+        replacements: id,
+        type: sequelize.QueryTypes.DELETE,
+    })
 
-module.exports = {db_addOrder, db_detailOrder, db_selectUserFromOrder}
+const db_removeOrder = (id) =>
+    sequelize.query('DELETE from pedidos WHERE id_pedido = ?', {
+        replacements: id,
+        type: sequelize.QueryTypes.DELETE,
+    })
+
+module.exports = {db_addOrder, db_detailOrder, db_selectUserFromOrder, db_removeOrderChild, db_removeOrder}
